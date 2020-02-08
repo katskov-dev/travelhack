@@ -1,0 +1,85 @@
+{
+    "countries": {
+        "000" : "Russia",
+
+        "001" : "Turkey",
+        "002" : "Mexico",
+        "003" : "Tunisia",
+        "004" : "Dominican Republic",
+        "005" : "Bulgaria",
+        "006" : "Cyprus",
+        "007" : "Greece",
+        "008" : "Cameroon",
+        "009" : "UAE",
+        "010" : "Thailand", 
+        
+        "011" : "Austria",
+        "012" : "Switzerland",
+        "013" : "Italy",
+        "014" : "Slovakia",
+        "015" : "Canada",
+        "016" : "Croatia",
+        "017" : "Armenia",
+        "018" : "Azerbaijan",
+        "019" : "Norway",
+        "020" : "South Korea",
+
+        "021" : "USA",
+        "022" : "Australia",
+        "023" : "Botswana",
+        "024" : "Zambia",
+        "025" : "Tanzania",
+        "026" : "India",
+        "027" : "Kenya",
+        "028" : "Madagascar",
+        "029" : "Bolivia",
+        "030" : "Ecuador"
+    },
+    "filters" : [
+        {
+            "name": "Пляжный отдых",
+            "countries":[
+                "001",
+                "002",
+                "003",
+                "004",
+                "005",
+                "006",
+                "007",
+                "008",
+                "009",
+                "010"
+        ]
+        },
+        {
+            "name": "Горнолыжные курорты",
+            "countries":[
+                "011",
+                "012",
+                "013",
+                "014",
+                "015",
+                "016",
+                "017",
+                "018",
+                "019",
+                "020"
+            ]
+        },
+        {
+            "name": "Сафари-парки",
+            "countries":[
+                "021",
+                "022",
+                "023",
+                "024",
+                "025",
+                "026",
+                "027",
+                "028",
+                "029",
+                "030"
+            ]
+        }
+    ]
+}
