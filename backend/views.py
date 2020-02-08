@@ -1,6 +1,7 @@
-from sanic.response import json
+from sanic.response import json as jsons
 import uuid
 from models import *
+from test import *
 import datetime
 
 
@@ -20,7 +21,7 @@ async def test2(request):
     # return "access_token"
     access_token = uuid.uuid4()
     print(access_token)
-    return json({"access_token": "kamol_lox"})
+    return jsons({'access_token': ''})
 
 async def sign_in(request):
     data = request.json
@@ -30,9 +31,9 @@ async def sign_in(request):
             session = Session(person=person.id,
                               access_key = access_key)
             session.save()
-            return json({"access_token": str(access_key),
+            return jsons({"access_token": str(access_key),
                          "code":"0"})
-    return json({"code": "1"})
+    return jsons({"code": "1"})
 
 async def sign_up(request):
     data = request.json
@@ -47,9 +48,9 @@ async def sign_up(request):
                             name = name,
                             password = password)
             person.save()
-            return json({"code":"0"})
+            return jsons({"code":"0"})
 
-    return json({"code":"1"})
+    return jsons({"code":"1"})
 
 async def sign_out(request):
     data = request.json
@@ -59,7 +60,7 @@ async def sign_out(request):
             session = Session(person=person.id,
                               access_key = access_key)
             session.save()
-            return json({"access_token": str(access_key)})
+            return jsons({"access_token": str(access_key)})
 
 
 async def get_tours_by_api(request):
@@ -100,16 +101,16 @@ async def get_tours_by_api(request):
                     "count_peoples": tour.kol_vzr
                 }
             )
-    return {"tours": res}
+    return jsons({"tours": res})
 
 
 async def get_tours(request):
     # {
-    #     "date_start": "",
-    #     "city_from": "ser@bud.ru",
-    #     "city_in": "ser@bud.ru",
-    #     "count_days": "123",
-    #     "count_peoples": "123"
+    #     "date_start": "01/03/20 12:00",
+    #     "city_from": "MOW",
+    #     "city_in": "TYO",
+    #     "count_days": 5,
+    #     "count_peoples": "2"
     # }
     data = request.json
     date_start = data["date_start"]
@@ -118,26 +119,14 @@ async def get_tours(request):
     count_days = data["count_days"]
     count_peoples = data["count_peoples"]
     date_start = datetime.datetime.strptime(date_start, "%d/%m/%y %H:%M")
-    date_finish = date_start + datetime.timedelta(days=int(count_days))
-    tours = Tour.select().where(Tour.city_home == city_from and Tour.city_travel == city_in and Tour.kol_vzr == int(count_peoples))
-    tours = list(tours)
+    date_finish = date_start + datetime.timedelta(days=count_days)
+
+    date_start = f"{str(date_start.year)}-{str(date_start.month)}-{str(date_start.day)}"
+
+
+    date_finish = f"{str(date_finish.year)}-{str(date_finish.month)}-{str(date_finish.day)}"
+    a1(date_start, date_finish, city_from, city_in)
+    a2(date_start, date_finish, count_peoples, "Стамбул, Турция ")
     res = []
-    for tour in tours:
-        date_start_tour = datetime.datetime.strptime(tour.plane_start_in, "%d/%m/%y %H:%M")
-        date_finish_tour = datetime.datetime.strftime(tour.plane_finish_out, "%d/%m/%y %H:%M")
-        if (date_start < date_finish_tour and date_finish > date_finish_tour):
-            res.append(
-                {
-                    "plane_start_in": tour.plane_start_in,
-                    "plane_finish_in": tour.plane_finish_in,
-                    "plane_start_out": tour.plane_start_out,
-                    "plane_finish_out": tour.plane_finish_out,
-                    "city_home": tour.city_home,
-                    "city_travel": tour.city_travel,
-                    "hotel": tour.hotel,
-                    "date_in": tour.date_in,
-                    "date_out": tour.date_out,
-                    "count_peoples": tour.kol_vzr
-                }
-            )
-    return {"tours":res}
+
+    return jsons({"tours":res})
