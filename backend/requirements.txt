@@ -1,0 +1,6 @@
+aiohttp==3.6.2
+peewee==3.13.1
+python-socketio==4.4.0
+sanic==19.12.2
+Sanic-Cors==0.9.9.post4
+ujson==1.35
