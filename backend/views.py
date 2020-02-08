@@ -118,7 +118,7 @@ async def get_tours(request):
     city_in = data["city_in"]
     count_days = data["count_days"]
     count_peoples = data["count_peoples"]
-    date_start = datetime.datetime.strptime(date_start, "%d/%m/%y %H:%M")
+    date_start = datetime.datetime.strptime(date_start, "%d/%m/%Y %H:%M")
     date_finish = date_start + datetime.timedelta(days=count_days)
     month = str(date_start.month)
     if len(month) == 1:
@@ -148,8 +148,6 @@ async def get_tours(request):
     res01 = res01[0]
     iata_from = res01["iata"]
     iata_from = iata_from[0]
-    print(iata_from, iata_in, ids)
-    # print(res01)
 
     res1 = await a1(date_start, date_finish, iata_from, iata_in)
     res2, hotels_amenties = await a2(date_start, date_finish, count_peoples, ids)
@@ -162,12 +160,9 @@ async def get_tours(request):
                     photos_ids.append(f"https://photo.hotellook.com/image_v2/crop/{photos_id}/620/400.auto")
                 amenties = []
                 for amenty in hotel["amenities"]:
-                    print(amenty, type(amenty))
                     amenties.append(hotels_amenties[str(amenty)])
                 tour = {
-                    "sum1": str(ticket["value"]) + "     " + str(hotel["median_minprice"]) + "     "  + str(int(count_peoples)) + "     "  + str(int(count_days)),
                     "sum": ticket["value"]*int(count_peoples) + hotel["median_minprice"] * 70 * int(count_peoples) * int(count_days),
-                    # "sum": ticket["value"] + hotel["median_minprice"] * 70,
                     "ticket":
                         {
                             "origin_iata": iata_from,

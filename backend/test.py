@@ -12,7 +12,6 @@ async def req3(query):
                   'limit': 1
                   }
         async with session.get('https://engine.hotellook.com/api/v2/lookup.json', params=params) as resp:
-            print(resp.status)
             d = json.loads(await resp.text())
             d = d["results"]
             # d = d[0]
@@ -34,10 +33,8 @@ async def req1(depart_start, return_start, origin_iata, destination_iata):
                   'return_range': "2",
                   'need_request': "True", }
         async with session.get('https://s.travel.megafon.ru/price_matrix', params=params) as resp:
-            print(resp.status)
             d = json.loads(await resp.text())
 
-            # print(json.dumps(d, indent=4))
             return d
 
     return {}
@@ -50,8 +47,6 @@ async def req2(check_in, check_out, adults, ids):
 
     f = open("x.json", 'w')
     res = []
-    # print("check_in",check_in)
-    # print("check_out",check_out)
     async with aiohttp.ClientSession() as session:
         data = {
             "page": "serp",
@@ -143,9 +138,7 @@ async def req2(check_in, check_out, adults, ids):
             "offset": 0
         }
         # data = json.dumps(data).encode()
-        # print(data)
         async with session.post('https://s.travel.megafon.ru/api/wl_search/result', json=data) as resp:
-            print(resp.status)
             d = json.loads(await resp.text())
             # loc = d[ids]
             hotels = d["hotels"]
@@ -156,11 +149,9 @@ async def req2(check_in, check_out, adults, ids):
             # hotels_amenties = hotels_amenties["property_types"]
             hotels_amenties = d["hotels_amenities"]
 
-            print(json.dumps(d, indent =4))
             # search_id = d["search_id"]
             loc = []
             # print("locations" in d)
-            print("locations")
             # for key in d["locations"].keys():
             #     print(key)
             #     # print(type(key))
@@ -266,22 +257,15 @@ async def req2(check_in, check_out, adults, ids):
                     }
 
                 async with session.post('https://s.travel.megafon.ru/api/wl_search/result', json=data) as resp:
-                    print(resp.status)
                     d = json.loads(await resp.text())
                     # if not "stop" in d:
                     #     break
-                    for key in d:
-                        print(key)
 
                     if "hotels" in d:
                         hotels.extend(d["hotels"])
                     # stop = d["stop"]
                     f.write(json.dumps(d))
-                    # print(stop)
-                    # print(json.dumps(d, indent=4).encode())
     return hotels, hotels_amenties
-
-    return {"ss":"ss"}
 async def a1(depart_start, return_start, origin_iata, destination_iata):
     return await req1(depart_start, return_start, origin_iata, destination_iata)
 
