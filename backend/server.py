@@ -5,7 +5,9 @@ from models import *
 from sanic.websocket import WebSocketProtocol
 import asyncio
 import socketio
-
+import json
+import time
+import os
 sio = socketio.AsyncServer(async_mode='sanic', cors_allowed_origins='*')
 app = Sanic(__name__)
 sio.attach(app)
@@ -13,9 +15,67 @@ from sanic_cors import CORS, cross_origin
 
 
 @sio.on("sendMes")
+async def my_event(sid, message_data):
+    print('SID', sid)
+
+    data = message_data
+    print('Get message: ', message_data)
+    message = Messages.create(
+        chat=0,
+        text=data["message"],
+        visitor_token=data["uuid"],
+        type="USER_MESSAGE",
+        datetime=datetime.datetime.now()
+    )
+    message.save()
+    msg = {
+        'type': message.type,
+        'content': message.text,
+    }
+    msgs = {
+        "messages": [msg],
+    }
+    print(msgs)
+    await sio.emit('getMes', msgs, room=sid)
+
+
+
+@sio.on("getMes")
+async def my_event(sid, uuid):
+    print('SID', sid)
+
+    print('getmes', uuid)
+    messages = Messages.select()
+    # messages = Messages.select().where(Messages.visitor_token == uuid).order_by(Messages.datetime.asc())
+    msgs = []
+    for message in messages:
+        msgs.append({
+            "type": message.type,
+            "content": message.text,
+        })
+    msgs = {
+        "messages": msgs,
+    }
+    print(msgs)
+    await sio.emit('getMes', msgs, room=sid)
+
+@sio.on("sendUiid")
 async def my_event(sid, message):
-    print('Get message: ', message)
-    await sio.emit('response', {'data': 'Hello, Kamol!'}, room=sid)
+    print('SID', sid)
+
+    # messages = Messages.select().where(Messages.visitor_token == uuid).order_by(Messages.datetime.asc())
+    messages = Messages.select()
+    msgs = []
+    for message in messages:
+        msgs.append({
+            "type": message.type,
+            "content": message.text,
+        })
+    msgs = {
+        "messages": msgs,
+    }
+    print(msgs)
+    await sio.emit('getMes', msgs, room=sid)
 
 
 

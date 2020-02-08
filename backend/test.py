@@ -26,8 +26,6 @@ async def req3(query):
 
 async def req1(depart_start, return_start, origin_iata, destination_iata):
     async with aiohttp.ClientSession() as session:
-        # print("check_in", return_start)
-        # print("check_out", depart_start)
         params = {'origin_iata': origin_iata,#'MOW',
                   'destination_iata': destination_iata,#'TYO',
                   'depart_start': depart_start,#'2020-02-05',

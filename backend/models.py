@@ -23,8 +23,10 @@ class Chat(Model):
 class Messages(Model):
     chat = IntegerField()
     text = CharField()
+    visitor_token = CharField()
+    type = CharField()
     datetime = CharField()
-    tour = IntegerField()
+
     class Meta:
         database = db
 
@@ -43,3 +45,6 @@ class Tour(Model):
     kol_chl = IntegerField()
     class Meta:
         database = db
+
+
+# db.create_tables([Person, Session, Chat, Tour, Messages])

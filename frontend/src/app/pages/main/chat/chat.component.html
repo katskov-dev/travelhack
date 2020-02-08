@@ -1,0 +1,47 @@
+<div class="chat-block">
+    <div  *ngIf="chatBlock" class="chat" [@enterAnimation]>
+        <div class="header-chat">
+            <h1 style="font-size: 30px; color:white">Привет гость 👋</h1>
+            <h2 style="font-size: 13px;color:rgb(212, 211, 211)">Я помогу тебе с вопросами и выбором туров!</h2>
+        </div>
+        <div  class="main-block-chat">
+            <div class="hot-turs-chat">
+                <h2 style="font-size: 13px; padding: 10px; color: lightcoral;"><i nz-icon nzType="fire" nzTheme="outline"></i> горящий тур:</h2>
+                <div nz-row>
+                    <div nz-col nzSpan="12">
+                        <img src="../../assets/hot-tour.jpg" class="hot-turs-img" alt="">
+                    </div>
+                    <div nz-col nzSpan="12" style="padding: 10px;">
+                        <nz-rate [ngModel]="2" nzDisabled></nz-rate>
+                        <h5>Кадрие, Белек, Турция</h5>
+                            <h3 style="font-weight: bold; margin-top: 5px;">Belkon Hotel</h3>
+                        <h3 style="font-weight: bold; margin-top: 5px;">22 553 ₽</h3>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let kek of msg_bot" class="message-from-bot">
+                <i style="color: #731982" nz-icon nzType="robot" nzTheme="outline"></i>
+                {{kek[0].message}}
+            </div>
+            <div *ngFor="let content of msg_user" class="message-from-client">
+                <i style="color: #03cc61" nz-icon nzType="user" nzTheme="outline"></i>
+                {{content[0].message}}
+            </div>
+        </div>
+        <div class="send-message-chat">
+            <!-- <div nz-row> -->
+                <span>
+                    <input [(ngModel)]="message" placeholder="Введите сообщение.." class="input-chat" type="text">
+                </span>
+                <span >
+                    <button (click)="sendMes()" class="button-chat"><i nz-icon nzType="mail" nzTheme="outline"></i></button>
+                </span>
+            <!-- </div> -->
+        </div>
+
+    </div>        
+    <button nzValue="large" class="open-chat-btn" nzType="primary" (click)="openChat(1)" nz-button nzShape="circle">
+        <i nz-icon ng nzType="message" nzTheme="outline"></i>
+    </button>
+    
+</div>
