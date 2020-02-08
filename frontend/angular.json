@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "travelhask": {
+    "TravelHack": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,20 +13,20 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/travelhask",
+            "outputPath": "dist/TravelHack",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
-              },
-              "src/favicon.ico",
-              "src/assets"
+              }
             ],
             "styles": [
               "src/styles.css",
@@ -69,18 +69,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "travelhask:build"
+            "proxyConfig": "src/proxy.conf.json",
+            "browserTarget": "TravelHack:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "travelhask:build:production"
+              "browserTarget": "TravelHack:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "travelhask:build"
+            "browserTarget": "TravelHack:build"
           }
         },
         "test": {
@@ -117,15 +118,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "travelhask:serve"
+            "devServerTarget": "TravelHack:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "travelhask:serve:production"
+              "devServerTarget": "TravelHack:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "travelhask"
+  "defaultProject": "TravelHack"
 }

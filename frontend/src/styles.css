@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    background: #00b956 !important; /* fallback for old browsers */
+    background: -webkit-linear-gradient(right, #00b956, #8DC26F);
+    background: -moz-linear-gradient(right, #00b956, #8DC26F);
+    background: -o-linear-gradient(right, #00b956, #8DC26F);
+    background: linear-gradient(to left, #00b956, #8DC26F);
+    font-family: Graphik-Super,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; 
+    /* overflow-y: hidden; */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    line-height: 1 !important;
+}
+
+.ant-select-selection{
+    border-radius: 0 !important;
+}
+
+.ant-input{
+    border-radius: 0 !important;
+}
+
+.ant-input-number{
+    border-radius: 0 !important;
+}
+
+.ant-calendar-picker{
+    width: 100% !important;
+}
+ 
