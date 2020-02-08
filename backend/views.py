@@ -4,7 +4,9 @@ from models import *
 from test import *
 import datetime
 
+packages_tours = {
 
+}
 
 def access_control(func):
      def control(request, *args, **kwargs):
@@ -151,9 +153,13 @@ async def get_tours(request):
 
     res1 = await a1(date_start, date_finish, iata_from, iata_in)
     res2, hotels_amenties = await a2(date_start, date_finish, count_peoples, ids)
+    package_tours = {}
     tours = []
+
     for hotel in res2:
         for ticket in res1["prices"]:
+            uuiid = str(uuid.uuid4())
+
             if int(hotel["median_minprice"]) != 0:
                 photos_ids = []
                 for photos_id in hotel["photos_ids"]:
@@ -162,6 +168,7 @@ async def get_tours(request):
                 for amenty in hotel["amenities"]:
                     amenties.append(hotels_amenties[str(amenty)])
                 tour = {
+                    "id": uuiid,
                     "sum": ticket["value"]*int(count_peoples) + hotel["median_minprice"] * 70 * int(count_peoples) * int(count_days),
                     "ticket":
                         {
@@ -188,7 +195,26 @@ async def get_tours(request):
                             "amenities": amenties
                         }
                 }
+            package_tours[uuiid] = tour
             tours.append(tour)
-    res = []
+    uuiid = str(uuid.uuid4())
+    print(uuiid)
+    packages_tours[uuiid] = package_tours
+    return jsons({
+        "id": uuiid,
+        "tours": tours
+    })
+    # return jsons({
+    #                "id": str(uuiid),
+    #                "tours": tours
+    #               })
 
-    return jsons({"tours":tours})
+
+
+async def get_package(request, package):
+    # print(type(package))
+    return jsons(packages_tours[package])
+
+
+async def get_package_tour(request, package, tour):
+    return jsons(packages_tours[package][tour])
