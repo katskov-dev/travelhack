@@ -4,9 +4,9 @@ from models import *
 from test import *
 import datetime
 
-<<<<<<< HEAD
-packages_tours = {
-=======
+
+packages_tours = {}
+
 def fromisoz(time):
 
     time = str(time).replace('Z', '')
@@ -14,9 +14,8 @@ def fromisoz(time):
     time =  datetime.datetime.strptime(time, "%Y-%m-%d") + datetime.timedelta(hours=12)
 
     return time
->>>>>>> 600c53959a0a3c33eb63dcf93e8a2b6561f15454
 
-}
+
 
 def access_control(func):
     def control(request, *args, **kwargs):
@@ -238,13 +237,10 @@ async def get_tours(request):
 
 
 async def get_package(request, package):
-    # print(type(package))
     return jsons(packages_tours[package])
 
 
-<<<<<<< HEAD
+
 async def get_package_tour(request, package, tour):
     return jsons(packages_tours[package][tour])
-=======
-    return jsons({"tours": tours})
->>>>>>> 600c53959a0a3c33eb63dcf93e8a2b6561f15454
+
