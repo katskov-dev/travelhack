@@ -227,6 +227,3 @@ def a1(depart_start, return_start, origin_iata, destination_iata):
     return asyncio.run(req1(depart_start, return_start, origin_iata, destination_iata))
 def a2(check_in, check_out, adults, destination):
     return asyncio.run(req2(check_in, check_out, adults, destination))
-
-f = asyncio.run(req1("2020-02-15", "2020-02-16", origin_iata, destination_iata))
-print(f)
