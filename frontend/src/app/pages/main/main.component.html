@@ -1,1 +1,98 @@
-<p>main works!</p>
+<div *ngIf="openModal" class="modal-container">
+    sdfsdfsdfsdfsdfsdf
+    <button (click)="ModalEvent(0)">x</button>  
+</div>
+
+
+
+<app-header></app-header>
+
+
+<img class="left-flowers" src="../../assets/flowers-left.png" alt="">
+<img class="right-flowers" src="../../assets/flowers-right.png" alt="">
+<img class="left-human" src="../../assets/men.png" alt="">
+
+
+<div class="main-container" nz-row nzType="flex" nzJustify="center" nzAlign="top">
+    <div nz-col nzXs="20" nzSm="16" nzMd="12" nzLg="14" nzXl="16" >
+        <div style="margin-top: 50px;" nz-row nzType="flex" nzJustify="center">
+            <h1 style="color: white; font-weight: bolder; font-size: 3em; text-align: center;">Поиск оптимальных туров</h1>
+        </div>
+        <div nz-row class="form-container">
+            <div nz-col>
+                <div nz-row>
+                    <div nz-col nzMd="12" nzLg="12" nzXl="12">
+                        <nz-select [nzSize]="'large'" nzAllowClear nzPlaceHolder="Город вылета" [(ngModel)]="selectedCity" [nzCustomTemplate]="custom">
+                            <nz-option nzCustomContent nzLabel="Москва" nzValue="Москва"> 
+                                Москва
+                            </nz-option>
+                            <nz-option nzCustomContent nzLabel="Санкт-Петербург" nzValue="Санкт-Петербург"> 
+                                Санкт-Петербург
+                            </nz-option>
+                            <nz-option nzCustomContent nzLabel="Екатерингбург" nzValue="Екатерингбург">
+                                Екатерингбург
+                            </nz-option>
+                          </nz-select>
+                          <ng-template #custom let-selected>
+                            <span>{{ selected.nzValue }}</span>
+                          </ng-template>
+                    </div>
+                    <div nz-col nzMd="12" nzLg="12" nzXl="12">
+                        <nz-select [nzSize]="'large'" nzAllowClear nzPlaceHolder="Страна прилета" [(ngModel)]="selectedCountry" [nzCustomTemplate]="custom">
+                            <nz-option-group nzLabel="Без визы">
+                                <nz-option nzCustomContent nzLabel="Абхазия" nzValue="Абхазия"> 
+                                    <img src="../../assets/Turkey.png"> Турция
+                                </nz-option>
+                                <nz-option nzCustomContent nzLabel="Тайланд" nzValue="Тайланд">
+                                    <img src="../../assets/Thailand.png"> Тайланд
+                                </nz-option>
+                                <nz-option nzCustomContent nzLabel="Абхазия" nzValue="Абхазия"> 
+                                    <img src="../../assets/Abkhazia.png"> Абхазия
+                                </nz-option>
+                                <nz-option nzCustomContent nzLabel="Индонезия" nzValue="Индонезия"> 
+                                    <img src="../../assets/Indonesia.png"> Индонезия
+                                </nz-option>
+                            </nz-option-group>
+                            <nz-option-group nzLabel="Шенген">
+                                <nz-option nzCustomContent nzLabel="Испания" nzValue="Испания"> 
+                                    <img src="../../assets/Spain.png"> Испания
+                                </nz-option>
+                                <nz-option nzCustomContent nzLabel="Фрацния" nzValue="Фрацния"> 
+                                    <img src="../../assets/France.png"> Фрацния
+                                </nz-option>
+                                <nz-option nzCustomContent nzLabel="Швейцария" nzValue="Швейцария"> 
+                                    <img src="../../assets/Switzerland.png"> Швейцария
+                                </nz-option>
+                            </nz-option-group>
+                          </nz-select>
+                          <ng-template #custom let-selected>
+                            <span>{{ selected.nzValue }}</span>
+                          </ng-template>
+                    </div>
+                </div>
+                <div nz-row >
+                    <div nz-col nz-col nzMd="12" nzLg="12" nzXl="12">
+                        <div nz-row>
+                            <div nz-col nz-col nzMd="12" nzLg="12" nzXl="12">
+                                <nz-date-picker  [nzSize]="'large'"></nz-date-picker>
+                            </div>
+                            <div nz-col nz-col nzMd="12" nzLg="12" nzXl="12">
+                                <nz-input-number [nzFormatter]="CountDays" style="width: 100%;"  [(ngModel)]="ValueDays" [nzSize]="'large'" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                            </div>
+                        </div>
+                    </div>
+                    <div nz-col nz-col nzMd="12" nzLg="12" nzXl="12">
+                        <nz-input-number [nzFormatter]="CountHuman" style="width: 100%;" [(ngModel)]="ValueHuman" [nzSize]="'large'" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 30px;">
+            <button nz-button nzValue="large" class="button-search" (click)="ModalEvent(1)" [nzLoading]="isLoadingOne">
+                Найти туры
+            </button>
+        </div>
+    </div>
+        
+</div>
