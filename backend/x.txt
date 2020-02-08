@@ -1,0 +1,7 @@
+@app.route("/api/packages/<package>", methods=['GET'])
+async def a6(request, package):
+    return await get_package(request, package)
+
+@app.route("/api/packages/<package>/tour/<tour>", methods=['GET'])
+async def a6(request, package, tour):
+    return await get_package_tour(request, package, tour)
