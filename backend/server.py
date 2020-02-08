@@ -70,33 +70,33 @@ async def my_event(sid, uuid):
 
 
 @app.route("/api/test", methods=['GET', 'POST'])
-def a1(request):
+async def a1(request):
     return test2(request)
 
 
 @app.route("/api/sign_in", methods=['POST'])
-def a2(request):
+async def a2(request):
     return sign_in(request)
 
 
 @app.route("/api/sign_up", methods=['POST'])
-def a3(request):
+async def a3(request):
     return sign_up(request)
 
 
 @app.route("/api/sign_out", methods=['POST'])
-def a4(request):
+async def a4(request):
     return sign_out(request)
 
 
 @app.route("/api/get_tours", methods=['POST'])
-def a5(request):
-    return get_tours(request)
+async def a5(request):
+    return await get_tours(request)
 
 
-@app.route("api/get_tours_by_api", methods=['POST'])
-def a6(request):
-    return get_tours_by_api(request)
+# @app.route("api/get_tours_by_api", methods=['POST'])
+# def a6(request):
+#     return await get_tours_by_api(request)
 
 
 # @app.route("/")
