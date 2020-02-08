@@ -1,0 +1,24 @@
+packages[Dict](id: uuid4)
+	query[Dict] (from, to, date_from, date_to, count_peoples: string)
+	tours[List]
+		tickets[Dict](origin_iata, dest_iata, depart, return, value, num_of_changes: string)
+		hotel[Dict](
+				distance_to_center,
+				address,
+				name,
+				location_id,
+				photos_urls[List],
+				median_price,
+				rating,
+				stars,
+				location,
+				id,
+				popularity,
+				amenities (не id а уже конкретные)
+				)
+
+
+		
+		
+		
+	
