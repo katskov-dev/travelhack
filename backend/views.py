@@ -4,17 +4,26 @@ from models import *
 from test import *
 import datetime
 
+def fromisoz(time):
+
+    time = str(time).replace('Z', '')
+    time = str(time).split('T')[0]
+    time =  datetime.datetime.strptime(time, "%Y-%m-%d") + datetime.timedelta(hours=12)
+
+    return time
 
 
 def access_control(func):
-     def control(request, *args, **kwargs):
-         access_key = request.json["access_key"]
-         session = session.get_or_none(access_key = access_key)
-         if session != None:
-            person = Person.get_or_none(id = session.person)
+    def control(request, *args, **kwargs):
+        access_key = request.json["access_key"]
+        session = session.get_or_none(access_key=access_key)
+        if session != None:
+            person = Person.get_or_none(id=session.person)
             if person != None:
                 func(request, person)
-     return control
+
+    return control
+
 
 async def test2(request):
     print("dadaa")
@@ -23,17 +32,19 @@ async def test2(request):
     print(access_token)
     return jsons({'access_token': ''})
 
+
 async def sign_in(request):
     data = request.json
     person = Person.get_or_none(Person.name == data['name'])
     if (person != None or person.password == data["password"]):
-            access_key = uuid.uuid4()
-            session = Session(person=person.id,
-                              access_key = access_key)
-            session.save()
-            return jsons({"access_token": str(access_key),
-                         "code":"0"})
+        access_key = uuid.uuid4()
+        session = Session(person=person.id,
+                          access_key=access_key)
+        session.save()
+        return jsons({"access_token": str(access_key),
+                      "code": "0"})
     return jsons({"code": "1"})
+
 
 async def sign_up(request):
     data = request.json
@@ -44,23 +55,24 @@ async def sign_up(request):
     if person == None:
         person = Person.get_or_none(Person.email == email)
         if person == None:
-            person = Person(email = email,
-                            name = name,
-                            password = password)
+            person = Person(email=email,
+                            name=name,
+                            password=password)
             person.save()
-            return jsons({"code":"0"})
+            return jsons({"code": "0"})
 
-    return jsons({"code":"1"})
+    return jsons({"code": "1"})
+
 
 async def sign_out(request):
     data = request.json
     person = Person.get_or_none(Person.name == data['name'])
     if (person != None or person.password == data["password"]):
-            access_key = uuid.uuid4()
-            session = Session(person=person.id,
-                              access_key = access_key)
-            session.save()
-            return jsons({"access_token": str(access_key)})
+        access_key = uuid.uuid4()
+        session = Session(person=person.id,
+                          access_key=access_key)
+        session.save()
+        return jsons({"access_token": str(access_key)})
 
 
 async def get_tours_by_api(request):
@@ -77,15 +89,21 @@ async def get_tours_by_api(request):
     city_in = data["city_in"]
     count_days = data["count_days"]
     count_peoples = data["count_peoples"]
-    date_start = datetime.datetime.strptime(date_start, "%d/%m/%y %H:%M")
+    # date_start = datetime.datetime.strptime(date_start, "%d/%m/%y %H:%M")
+    date_start = fromisoz(date_start)
     date_finish = date_start + datetime.timedelta(days=int(count_days))
     tours = Tour.select().where(
         Tour.city_home == city_from and Tour.city_travel == city_in and Tour.kol_vzr == int(count_peoples))
     tours = list(tours)
     res = []
     for tour in tours:
-        date_start_tour = datetime.datetime.strptime(tour.plane_start_in, "%d/%m/%y %H:%M")
-        date_finish_tour = datetime.datetime.strftime(tour.plane_finish_out, "%d/%m/%y %H:%M")
+        # date_start_tour = datetime.datetime.strptime(tour.plane_start_in, "%d/%m/%y %H:%M")
+        date_start_tour = fromisoz(tour.plane_start_in)
+
+        # date_finish_tour = datetime.datetime.strftime(tour.plane_finish_out, "%d/%m/%y %H:%M")
+
+        date_finish_tour = fromisoz(tour.plane_finish_out)
+
         if (date_start < date_finish_tour and date_finish > date_finish_tour):
             res.append(
                 {
@@ -118,11 +136,14 @@ async def get_tours(request):
     city_in = data["city_in"]
     count_days = data["count_days"]
     count_peoples = data["count_peoples"]
-    date_start = datetime.datetime.strptime(date_start, "%d/%m/%Y %H:%M")
+    # date_start = datetime.datetime.strptime(date_start, "%d/%m/%Y %H:%M")
+
+    date_start = fromisoz(date_start)
+
     date_finish = date_start + datetime.timedelta(days=count_days)
     month = str(date_start.month)
     if len(month) == 1:
-        month = "0"+ month
+        month = "0" + month
     day = str(date_start.day)
     if len(day) == 1:
         day = "0" + day
@@ -131,7 +152,7 @@ async def get_tours(request):
 
     month = str(date_finish.month)
     if len(month) == 1:
-        month = "0"+ month
+        month = "0" + month
     day = str(date_finish.day)
     if len(day) == 1:
         day = "0" + day
@@ -139,7 +160,7 @@ async def get_tours(request):
 
     res0 = await a3(city_in)
     # print(res0)
-    res0= res0[0]
+    res0 = res0[0]
     ids = res0["id"]
     iata_in = res0["iata"]
     iata_in = iata_in[0]
@@ -162,7 +183,8 @@ async def get_tours(request):
                 for amenty in hotel["amenities"]:
                     amenties.append(hotels_amenties[str(amenty)])
                 tour = {
-                    "sum": ticket["value"]*int(count_peoples) + hotel["median_minprice"] * 70 * int(count_peoples) * int(count_days),
+                    "sum": ticket["value"] * int(count_peoples) + hotel["median_minprice"] * 70 * int(
+                        count_peoples) * int(count_days),
                     "ticket":
                         {
                             "origin_iata": iata_from,
@@ -174,14 +196,14 @@ async def get_tours(request):
                         },
                     "hotel":
                         {
-                            "distance_to_center":hotel["distance_to_center"],
+                            "distance_to_center": hotel["distance_to_center"],
                             "address": hotel["address"],
                             "name": hotel["name"],
                             "location_id": hotel["location_id"],
-                            "photos_urls":photos_ids,
+                            "photos_urls": photos_ids,
                             "median_price": hotel["median_minprice"],
                             "rating": hotel["rating"],
-                            "stars":hotel["stars"],
+                            "stars": hotel["stars"],
                             "location": hotel["location"],
                             "id": hotel["id"],
                             "popularity": hotel["popularity"],
@@ -191,4 +213,4 @@ async def get_tours(request):
             tours.append(tour)
     res = []
 
-    return jsons({"tours":tours})
+    return jsons({"tours": tours})

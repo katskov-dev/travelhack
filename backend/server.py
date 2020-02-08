@@ -13,13 +13,16 @@ app = Sanic(__name__)
 sio.attach(app)
 from sanic_cors import CORS, cross_origin
 
+sid_visitor_id = {
 
+}
 
 
 
 @sio.on("sendMes")
 async def my_event(sid, message_data):
     data = message_data
+    sid_visitor_id[sid] = data["uuid"]
     message = Messages.create(
         chat=0,
         text=data["message"],
@@ -67,6 +70,19 @@ async def my_event(sid, uuid):
     }
     await sio.emit('getMes', msgs, room=sid)
 
+
+@app.route('/api/sendall', methods=["POST"])
+async def send_message_to_all(request):
+    data = request.json
+    msgs = {
+        "messages": [
+            {
+                "type": "BOT_MESSAGE",
+                "content": data["messsage"]
+            }
+        ]
+    }
+    await sio.emit('getMes', msgs)
 
 
 @app.route("/api/test", methods=['GET', 'POST'])
