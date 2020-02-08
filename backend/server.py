@@ -2,7 +2,19 @@ from sanic import Sanic
 from sanic.response import json
 from views import *
 from models import *
+from sanic.websocket import WebSocketProtocol
+
 app = Sanic()
+
+@app.websocket('/feed')
+async def feed(request, ws):
+    while True:
+        data = 'hello!'
+        print('Sending: ' + data)
+        await ws.send(data)
+        data = await ws.recv()
+        print('Received: ' + data)
+
 
 @app.route("/api/test", methods=['GET','POST'])
 def a1(request):
@@ -36,4 +48,4 @@ def a6(request):
 if __name__ == "__main__":
     db.connect()
     db.create_tables([Person, Session])
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=8000,  protocol=WebSocketProtocol)
