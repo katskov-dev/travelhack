@@ -1,1 +1,32 @@
-<p>recover works!</p>
+<div class="auth-main-container" nz-row nzType="flex" nzJustify="center" nzAlign="middle">
+
+
+    <div nz-col nzSpan="12" class="froms-container">
+        <div nz-row nzSpan="12">
+            <h2>Восстановить пароль</h2>
+        </div>
+
+        <div nz-row nzSpan="12">
+            <nz-input-group [nzSuffix]="suffixTemplateMail">
+                <!-- <input [(ngModel)]="user.Email" type="text" class="input-style" placeholder="Введите вашу почту" /> -->
+            </nz-input-group>
+            <ng-template #suffixTemplateMail>
+                <i nz-icon nzType="mail" nzTheme="outline"></i>
+            </ng-template>
+        </div>
+    
+        <div nz-row nzSpan="12" style="margin-top: 20px;" nzType="flex" nzJustify="center"> 
+                <!-- <button (click)="sendDataUser(user)" class="button-style" nzType="primary">получить новый пароль</button> -->
+        </div>
+
+
+        <p class="message"><a routerLink="/auth" style="color: #4CAF50;">Авторизация</a></p>
+           
+      
+        <div [ngStyle]="{display: stem}" style="margin-top: 20px;">
+            <p class="message" style="color: red !important">Такая почта не зарегестрирована</p>
+        </div>
+    </div>
+
+
+</div>
