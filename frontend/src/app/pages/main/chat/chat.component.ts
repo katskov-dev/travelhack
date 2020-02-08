@@ -1,4 +1,4 @@
-import { Component, OnInit,AfterViewChecked, ChangeDetectorRef, ElementRef, ViewChild, QueryList, ViewChildren, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ChangeDetectorRef, ElementRef, ViewChild, QueryList, ViewChildren, HostListener } from '@angular/core';
 import { WebsocketService } from './websocket.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { HttpService } from './http.service';
@@ -26,7 +26,7 @@ import { CookieService } from 'ngx-cookie-service';
     )
   ],
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
 
@@ -57,6 +57,7 @@ export class ChatComponent implements OnInit {
                 {'message': data.messages[i].content}
               ]
             )
+            
           }else{
 
             this.msg_bot.push(
@@ -64,9 +65,11 @@ export class ChatComponent implements OnInit {
                 {'message': data.messages[i].content}
               ]
             )
+            
           }
         }
         this.cdr.detectChanges();
+        this.scrollToBottom();
       })
     }
     // this.httpService.getData()
@@ -74,6 +77,18 @@ export class ChatComponent implements OnInit {
     //   (data: Tour) => {console.log(data.access_token)},
     //   error => { console.log(error)}
     // );
+  }
+
+  ngAfterViewChecked() {   
+    this.cdr.detectChanges();   
+
+    this.scrollToBottom();   
+  } 
+
+  scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }                 
   }
 
   chatBlock: boolean= false;
@@ -94,6 +109,7 @@ export class ChatComponent implements OnInit {
       alert('kek')
     }else{
       this.websocketService.sendMessage(this.message, this.cookieService.get('Uuid'));
+      this.message = "";
     }
 
   } 

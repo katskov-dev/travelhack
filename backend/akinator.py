@@ -24,9 +24,11 @@ messagesd = [
 def state_is_country(state):
     return state > 7
 
+
 def check_yes(s):
     s = s.lower()
     return s in ['yes', 'y', 'да', 'так точно', 'конечно', '+', '1', 'true']
+
 
 def check_no(s):
     s = s.lower()
@@ -37,8 +39,11 @@ class Akinator():
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(Akinator, cls).__new__(cls)
+            cls.instance.states = {}
 
-    def query(self, state=0, answer="+"):
+    def query(self, id="", state=0, answer="+"):
+        if not id in self.states:
+            return 0
         if state == 0:
             return 1
         elif (state == 1) or (answer == "+"):

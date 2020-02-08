@@ -14,12 +14,12 @@ sio.attach(app)
 from sanic_cors import CORS, cross_origin
 
 
+
+
+
 @sio.on("sendMes")
 async def my_event(sid, message_data):
-    print('SID', sid)
-
     data = message_data
-    print('Get message: ', message_data)
     message = Messages.create(
         chat=0,
         text=data["message"],
@@ -35,18 +35,13 @@ async def my_event(sid, message_data):
     msgs = {
         "messages": [msg],
     }
-    print(msgs)
     await sio.emit('getMes', msgs, room=sid)
 
 
 
 @sio.on("getMes")
 async def my_event(sid, uuid):
-    print('SID', sid)
-
-    print('getmes', uuid)
-    messages = Messages.select()
-    # messages = Messages.select().where(Messages.visitor_token == uuid).order_by(Messages.datetime.asc())
+    messages = Messages.select().where(Messages.visitor_token == uuid).order_by(Messages.datetime.asc())
     msgs = []
     for message in messages:
         msgs.append({
@@ -56,15 +51,11 @@ async def my_event(sid, uuid):
     msgs = {
         "messages": msgs,
     }
-    print(msgs)
     await sio.emit('getMes', msgs, room=sid)
 
 @sio.on("sendUiid")
-async def my_event(sid, message):
-    print('SID', sid)
-
-    # messages = Messages.select().where(Messages.visitor_token == uuid).order_by(Messages.datetime.asc())
-    messages = Messages.select()
+async def my_event(sid, uuid):
+    messages = Messages.select().where(Messages.visitor_token == uuid).order_by(Messages.datetime.asc())
     msgs = []
     for message in messages:
         msgs.append({
@@ -74,7 +65,6 @@ async def my_event(sid, message):
     msgs = {
         "messages": msgs,
     }
-    print(msgs)
     await sio.emit('getMes', msgs, room=sid)
 
 
