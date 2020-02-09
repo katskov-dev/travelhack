@@ -26,6 +26,9 @@ import { ChatComponent } from './pages/main/chat/chat.component';
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 // const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
 
+import { MapComponent } from './pages/map/map.component';
+import { TourComponent } from './pages/tour/tour.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,9 @@ import { ChatComponent } from './pages/main/chat/chat.component';
     RecoverComponent,
     MainComponent,
     HeaderComponent,
-    ChatComponent
+    ChatComponent,
+    MapComponent,
+    TourComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +49,7 @@ import { ChatComponent } from './pages/main/chat/chat.component';
     HttpClientModule,
     BrowserAnimationsModule,
     NgZorroAntdModule,
+    LeafletModule
     // SocketIoModule.forRoot(config)
   ],
   providers: [
