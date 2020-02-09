@@ -22,17 +22,65 @@
     
     
     <div *ngIf="openModal" class="modal-container" [@enterAnimation]>
+        <h1 style="color: white; font-weight: bolder; font-size: 3em; text-align: center; margin-bottom: 0;">Выберите тур в Турцию от {{min_sum_tour}} ₽</h1>
         <button nz-button nzType="default" nzShape="circle" class="close-modal" (click)="ModalEvent(0)"><i nz-icon nzType="close" nzTheme="outline"></i></button>
         <div class="main-block-in-modal">
             <div nz-row>
-                <div nz-col nzSPan="8">
-                    <div style="padding: 20px; background-color: #ffffff;">
-                        kek
+                <div nz-col nzSpan="8">
+                    <div style="padding: 20px">
+                        <div class="container-params-modal">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Сначала дешевые" [(ngModel)]="selectedOS">
+                                <nz-option nzCustomContent nzLabel="дешевые" nzValue="дешевые"
+                                    >дешевые</nz-option
+                                >
+                                <nz-option nzCustomContent nzLabel="дорогие" nzValue="дорогие"
+                                    >дорогие
+                                </nz-option>
+                            </nz-select>
+
+                            <div>
+                                <nz-input-number [nzPlaceHolder]="'от'" style="width: 50%;" [(ngModel)]="paramFrom" [nzMin]="20000" [nzMax]="80000" [nzStep]="5000"></nz-input-number>
+                                <nz-input-number [nzPlaceHolder]="'до'" style="width: 50%;" [(ngModel)]="paramBefore" [nzMin]="30000" [nzMax]="80000" [nzStep]="5000"></nz-input-number>
+                            </div>
+
+                            <label nz-checkbox [(ngModel)]="checked"><nz-rate [ngModel]="5"></nz-rate> от 75 509 ₽</label>
+                            <label nz-checkbox [(ngModel)]="checked"><nz-rate [ngModel]="4"></nz-rate> от 65 509 ₽</label>
+                            <label nz-checkbox [(ngModel)]="checked"><nz-rate [ngModel]="3"></nz-rate> от 55 509 ₽</label>
+                            <label nz-checkbox [(ngModel)]="checked"><nz-rate [ngModel]="2"></nz-rate> от 45 509 ₽</label>
+                            <label nz-checkbox [(ngModel)]="checked"><nz-rate [ngModel]="1"></nz-rate> от 35 509 ₽</label>
+                        </div>
                     </div>
                 </div>
-                <div nz-col nzSPan="12">
-                    <div style="padding: 20px; background-color: #ffffff;">
-                        kek
+                <div nz-col nzSpan="16">
+                    <div style="padding: 20px;">
+                        <div class="container-tours-modal">
+                            
+                            <div *ngFor="let tour of list_tours" class="blocks-tours">
+                                <div nz-row>
+                                    <div nz-col nzSpan="8">
+                                        <img class="tours-img" src="{{tour.hotel.photos_urls[0]}}" alt="">
+                                        <div class="circle-in-tours">
+                                            {{tour.hotel.rating}}
+                                        </div>
+                                    </div>
+                                    <div nz-col nzSpan="12">
+                                        <div style="padding: 20px;">
+                                            <div nz-row>
+                                                <h3>{{tour.hotel.name}}</h3>
+                                            </div>
+                                            <div nz-row>
+                                                <h3><nz-rate [ngModel]="tour.hotel.stars" nzDisabled></nz-rate></h3>
+                                                <h3>{{tour.hotel.address}}</h3>
+                                            </div>
+                                            <div nz-row>
+                                                <h3 style="margin-top: 10px; font-weight: bolder;">{{tour.sum}} ₽</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +92,7 @@
 
 
 
-    <div nz-col nzXs="20" nzSm="16" nzMd="12" nzLg="14" nzXl="16" >
+    <div *ngIf="openSearch" nz-col nzXs="20" nzSm="16" nzMd="12" nzLg="14" nzXl="16" >
         <div style="margin-top: 50px;" nz-row nzType="flex" nzJustify="center">
             <h1 style="color: white; font-weight: bolder; font-size: 3em; text-align: center;">Поиск оптимальных туров</h1>
         </div>
@@ -52,7 +100,8 @@
             <div nz-col>
                 <div nz-row>
                     <div nz-col nzMd="12" nzLg="12" nzXl="12">
-                        <nz-select [nzSize]="'large'" nzAllowClear nzPlaceHolder="Город вылета" [(ngModel)]="selectedCity" [nzCustomTemplate]="custom">
+                        <input nz-input [nzSize]="'large'" placeholder="Город вылета" [(ngModel)]="user.city_from" />
+                        <!-- <nz-select [nzSize]="'large'" nzAllowClear nzPlaceHolder="Город вылета" [(ngModel)]="user.city_from" [nzCustomTemplate]="custom">
                             <nz-option nzCustomContent nzLabel="Москва" nzValue="Москва"> 
                                 Москва
                             </nz-option>
@@ -65,10 +114,11 @@
                           </nz-select>
                           <ng-template #custom let-selected>
                             <span>{{ selected.nzValue }}</span>
-                          </ng-template>
+                          </ng-template> -->
                     </div>
                     <div nz-col nzMd="12" nzLg="12" nzXl="12">
-                        <nz-select [nzSize]="'large'" nzAllowClear nzPlaceHolder="Страна прилета" [(ngModel)]="selectedCountry" [nzCustomTemplate]="custom">
+                        <input nz-input [nzSize]="'large'" placeholder="Город прилета" [(ngModel)]="user.city_in" />
+                        <!-- <nz-select [nzSize]="'large'" nzAllowClear nzPlaceHolder="Страна прилета" [(ngModel)]="user.city_in" [nzCustomTemplate]="custom">
                             <nz-option-group nzLabel="Без визы">
                                 <nz-option nzCustomContent nzLabel="Абхазия" nzValue="Абхазия"> 
                                     <img src="../../assets/Turkey.png"> Турция
@@ -97,29 +147,29 @@
                           </nz-select>
                           <ng-template #custom let-selected>
                             <span>{{ selected.nzValue }}</span>
-                          </ng-template>
+                          </ng-template> -->
                     </div>
                 </div>
                 <div nz-row >
                     <div nz-col nz-col nzMd="12" nzLg="12" nzXl="12">
                         <div nz-row>
                             <div nz-col nz-col nzMd="12" nzLg="12" nzXl="12">
-                                <nz-date-picker  [nzSize]="'large'"></nz-date-picker>
+                                <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]="user.date_start" [nzSize]="'large'"></nz-date-picker>
                             </div>
                             <div nz-col nz-col nzMd="12" nzLg="12" nzXl="12">
-                                <nz-input-number [nzFormatter]="CountDays" style="width: 100%;"  [(ngModel)]="ValueDays" [nzSize]="'large'" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                                <nz-input-number [nzPlaceHolder]="'количество ночей'"  style="width: 100%;"  [(ngModel)]="user.count_days" [nzSize]="'large'" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
                             </div>
                         </div>
                     </div>
                     <div nz-col nz-col nzMd="12" nzLg="12" nzXl="12">
-                        <nz-input-number [nzFormatter]="CountHuman" style="width: 100%;" [(ngModel)]="ValueHuman" [nzSize]="'large'" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                        <nz-input-number [nzPlaceHolder]="'количество человек'" style="width: 100%;" [(ngModel)]="user.count_peoples" [nzSize]="'large'" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
                     </div>
                 </div>
             </div>
 
         </div>
         <div style="display: flex; justify-content: center; margin-top: 30px;">
-            <button nz-button nzValue="large" class="button-search" (click)="ModalEvent(1)" [nzLoading]="isLoadingOne" >
+            <button nz-button nzValue="large" class="button-search" (click)="ModalEvent(1, user)" [nzLoading]="isLoadingOne" >
                 Найти туры
             </button>
         </div>

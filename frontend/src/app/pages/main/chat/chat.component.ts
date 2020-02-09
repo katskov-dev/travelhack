@@ -20,7 +20,7 @@ import { CookieService } from 'ngx-cookie-service';
         ]),
         transition(':leave', [
           style({transform: 'translateX(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateX(100%)', opacity: 0}))
+          animate('500ms', style({transform: 'translateX(c100%)', opacity: 0}))
         ])
       ]
     )
@@ -44,17 +44,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.cookieService.set( 'Uuid', ui);
     }else{
       this.websocketService.sendUiid(this.cookieService.get('Uuid'));
-      console.log(this.cookieService.get('Uuid'))
-      
       this.websocketService.getMessages().subscribe((data: Tour) => {
         let arrayFromServer = new Array
         arrayFromServer.push(data.messages)
-        console.log(arrayFromServer)
         for (let i = 0; i < arrayFromServer[0].length; i ++ ){
-          console.log('kek1---> ', data.messages[i].type, data.messages[i].content)
           this.messages.push(data.messages[i]);
-
-          
         }
         this.cdr.detectChanges();
         this.scrollToBottom();

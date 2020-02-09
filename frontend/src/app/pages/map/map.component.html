@@ -1,0 +1,48 @@
+<app-header></app-header>
+
+<img class="left-flowers" src="../../assets/flowers-left.png" alt="">
+<img class="right-flowers" src="../../assets/flowers-right.png" alt="">
+<img class="left-human" src="../../assets/men.png" alt=""> 
+
+<div  nz-row nzType="flex" nzJustify="center" nzAlign="top">
+<div class="modal-container" [@enterAnimation]> 
+    <h1 style="color: white; font-weight: bolder; font-size: 3em; text-align: center; margin-bottom: 0;">Выберите путешествие по душе ...</h1> 
+    <div class="main-block-in-modal"> 
+        <div nz-row> 
+            <div nz-col nzSpan="8"> 
+                <div style="padding: 20px"> 
+                    <div class="container-params-modal"> 
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Пляжный отдых" [(ngModel)]="selectedOS"> 
+                        <nz-option nzCustomContent nzLabel="Пляжный отдых" nzValue="Пляжный отдых" 
+                        >Пляжный отдых
+                        </nz-option> 
+                        <nz-option nzCustomContent nzLabel="Горнолыжные курорты " nzValue="Горнолыжные курорты " 
+                        >Горнолыжные курорты 
+                        </nz-option> 
+                        <nz-option nzCustomContent nzLabel="Сафари-парки" nzValue="Сафари-парки" 
+                        >Сафари-парки
+                        </nz-option>
+                        </nz-select> 
+                     </div> 
+                 </div> 
+             </div> 
+
+
+    <div nz-col nzSpan="16"> 
+        <div style="padding: 20px;"> 
+            <div class="container-tours-modal"> 
+                <div class="blocks-tours"> 
+                    <div nz-row> 
+                        <div nz-col nzSpan="8"> 
+                             
+                             </div> 
+                     </div> 
+                </div> 
+    
+            </div> 
+        </div> 
+    </div> 
+    </div> 
+    </div> 
+    </div>
+</div>

@@ -114,5 +114,15 @@
     background: #9448a0;
 }
 .button-chat:active{
-    background: #03cc61;
+    background: #07ce64;
+}
+
+.close-chat-btn{
+    border: 0;
+    outline: none;
+    position: absolute;
+    z-index: 100;
+    top: 10px;
+    right: 10px;
+    color: #fff;
 }
