@@ -1,5 +1,4 @@
 export class User{
-    Login: string;
+    Phone: string;
     Password: string;
-    access_token: string;
 }

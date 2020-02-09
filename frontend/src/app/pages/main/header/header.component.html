@@ -40,15 +40,15 @@
 
                 </div>
                 <div *ngIf="buttonsonheader">
-                    <button nz-button class="button-on-header">
+                    <button [routerLink]="['/']" router nz-button class="button-on-header">
                         <i nz-icon nzType="schedule" nzTheme="outline"></i>
                         Подбор туров
                     </button>
-                    <button nz-button class="button-on-header">
+                    <button [routerLink]="['/map']" nz-button class="button-on-header">
                         <i nz-icon nzType="environment" nzTheme="outline"></i>
                         Карты
                     </button>
-                    <button nz-button class="button-on-header">
+                    <button [routerLink]="['/auth']" nz-button class="button-on-header">
                         <i nz-icon nzType="login" nzTheme="outline"></i>
                         Войти
                     </button>
