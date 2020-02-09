@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import * as L from "leaflet";
+<<<<<<< HEAD
+=======
+// let countriesGeoJson = require('./countries.geojson');
+// countriesGeoJson = JSON.parse(countriesGeoJson);
+>>>>>>> 821c43e174bc47fd894e88421e3a5d39fbffe380
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -12,10 +17,15 @@ export class MapComponent implements OnInit {
   json;
   options = {
     layers: [
+<<<<<<< HEAD
       L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 5,
         attribution: ""
       })
+=======
+      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+      // L.geoJson(countriesGeoJson)
+>>>>>>> 821c43e174bc47fd894e88421e3a5d39fbffe380
     ],
     zoom: 2,
     center: L.latLng(47.482019, -1)
