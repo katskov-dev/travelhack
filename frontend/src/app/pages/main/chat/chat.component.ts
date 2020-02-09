@@ -20,7 +20,7 @@ import { CookieService } from 'ngx-cookie-service';
         ]),
         transition(':leave', [
           style({transform: 'translateX(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateX(c100%)', opacity: 0}))
+          animate('500ms', style({transform: 'translateX(100%)', opacity: 0}))
         ])
       ]
     )
