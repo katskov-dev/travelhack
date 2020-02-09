@@ -13,9 +13,9 @@
         <div nz-row style="background-color: white;">
             <div nz-col style="background-color: white;  height:100%;" nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
                 <nz-carousel nzAutoPlay nzEffect="scrollx" style="text-align: center; 
-                height: 600px;
+                height: 400px;
                 line-height: 160px;
-                background: #781799;
+                background: #ffffff;
                 color: #4f4;
                 overflow: hidden;
               }">
@@ -32,6 +32,9 @@
                     <div nz-col style="background-color: white; width: 100%;  padding-left: 10px;  padding-top: 5px;"
                         nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
                         <h1>{{list_tours.hotel.name}}</h1>
+                        <button nz-button class="button-on-tour">
+                                Забронировать
+                            </button>
 
                         <div nz-row>
                             <div nz-col style="padding-top: 5px;" nzMd="10" nzLg="10" nzXl="10">
@@ -47,41 +50,43 @@
                             </div>
                         </div>
                         <h5 style="font-size: 11px;">Расстояние до центра: {{list_tours.hotel.distance_to_center}} метров</h5>
-                        <h3>Услуги</h3>
-                        <div nz-row>
-                            <div *ngFor="let amenity of  list_tours.hotel.amenities" style="color: #494;">
-                                    <i nz-icon nzType="check" nzTheme="outline"></i> {{amenity.name}}
-                                    <!-- <nz-divider nzType="vertical"></nz-divider> -->
+                        <div nz-row >
+                            <div nz-col nzSpan='12'>
+                                    <h3>Услуги</h3>
+                                    <div nz-row>
+                                        <div *ngFor="let amenity of  list_tours.hotel.amenities" style="color: #494;">
+                                                <i nz-icon nzType="check" nzTheme="outline"></i> {{amenity.name}}
+                                                <!-- <nz-divider nzType="vertical"></nz-divider> -->
+                                        </div>
+                                        
+            
+                                    </div>
+
                             </div>
-                            
-
-                        </div>
-                    </div>
-                </div>
-
-                <div nz-row style=" padding-bottom: 20px; padding-top: 10px; width: 100%;" nzSpan="12" nzType="flex"
-                    nzAlign="middle">
-                    <div nz-col style="background-color: white; width: 100%;  padding-left: 10px;  padding-top: 5px;"
-                        nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
-                        <div nz-row>
-                            <div nz-col style="padding-top: 5px; padding-bottom: 5px;" nzMd="10" nzLg="10" nzXl="10">
-                                <h3 style="font-size: 15px;">Цена: &nbsp;&nbsp; <span
-                                        style="font-size: 20px; font-weight: bolder;">{{list_tours.sum}} ₽</span> </h3>
-                                <h5 style="font-size: 11px;"><b>Стоимость перелета на одного человека:</b>: {{list_tours.ticket.value}}</h5>
-                                <h5 style="font-size: 11px;"><b>Количество пересадок</b>: {{list_tours.ticket.num_of_changes}}</h5>
+                            <div nz-col nzSpan='12'>
+                                    <div nz-row style=" padding-bottom: 20px; padding-top: 10px; width: 100%;" nzSpan="12" nzType="flex"
+                                    nzAlign="middle">
+                                    <div nz-col style="background-color: white; width: 100%;  padding-left: 10px;  padding-top: 5px;"
+                                        nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
+                                        <div nz-row>
+                                            <div nz-col style="padding-top: 5px; padding-bottom: 5px;" nzMd="10" nzLg="10" nzXl="10">
+                                                <h3 style="font-size: 15px;">Цена: &nbsp;&nbsp; <span
+                                                        style="font-size: 20px; font-weight: bolder;">{{list_tours.sum}} ₽</span> </h3>
+                                                <h5 style="font-size: 11px;"><b>Стоимость перелета на одного человека:</b>: {{list_tours.ticket.value}}</h5>
+                                                <h5 style="font-size: 11px;"><b>Количество пересадок</b>: {{list_tours.ticket.num_of_changes}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
 
-                <div nz-row style="padding-top: 20px; width: 100%;" nzSpan="12" nzJustify="center" nzType="flex"
-                    nzAlign="middle">
-                    <div nz-col class="btn-container-for-cart" nzSpan="12">
-                        <button nz-button class="button-on-tour">
-                            Забронировать
-                        </button>
-                    </div>
-                </div>
+                
+
+              
 
             </div>
         </div>
