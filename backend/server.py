@@ -142,7 +142,7 @@ async def a1(request):
 
 @app.route("/api/sign_in", methods=['POST'])
 async def a2(request):
-    return sign_in(request)
+    return await sign_in(request)
 
 
 @app.route("/api/sign_up", methods=['POST'])
@@ -174,7 +174,7 @@ async def a7(request, tour_id):
 async def a8(request, package, tour):
     return await get_package_tour(request, package, tour)
 
-@app.route("/api/get_recomended_tours", methods=['GET'])
+@app.route("/api/get_recomended_tours", methods=['GET', 'POST'])
 async def a9(request):
     return await get_recomended_tours(request)
 

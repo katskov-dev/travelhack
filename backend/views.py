@@ -4,6 +4,7 @@ from models import *
 from test import *
 import datetime
 import math
+from sanic import response as res
 
 packages_tours = {}
 global_tours = {}
@@ -44,10 +45,13 @@ async def sign_in(request):
     user_data = f.read()
     user_data = json.loads(user_data)
     # print(user_data)
+
     if phone in user_data:
-        return jsons({"code": "0"})
+        return jsons({})
     else:
-        return jsons({"code": "1"})
+        return res.json(
+            status=401
+        )
     # person = Person.get_or_none(Person.name == data['name'])
     # if (person != None or person.password == data["password"]):
     #     access_key = uuid.uuid4()
@@ -88,7 +92,7 @@ async def sign_out(request):
         return jsons({"access_token": str(access_key)})
 
 
-async def get_tours_by_api(data):
+async def get_tours_by_api(data,hu,tu):
     # hu = 'hu' in request.args
     # tu = 'tu' in request.args
     date_start = data["date_start"]
@@ -144,8 +148,8 @@ async def get_tours_by_api(data):
         for ticket in res1["prices"]:
             uuiid = str(uuid.uuid4())
 
-            #     if tu and ticket in use_tickets:
-            #         continue
+                # if tu and ticket in use_tickets:
+                #     continue
             if int(hotel["median_minprice"]) != 0:
                 photos_ids = []
                 for photos_id in hotel["photos_ids"]:
@@ -187,7 +191,8 @@ async def get_tours_by_api(data):
                 global_tours[uuiid] = tour
             package_tours[uuiid] = tour
             tours.append(tour)
-
+            if hu:
+                break
     uuiid = str(uuid.uuid4())
     print(uuiid)
     packages_tours[uuiid] = package_tours
@@ -425,7 +430,9 @@ async def get_tour_by_id(request, tour_id):
 
 async def get_recomended_tours(request):
     data = request.json
-    phone = data["phone"]
+    # print(type(data))
+    phone = data
+    phone = str(phone)
     f = open("analized.json", 'r')
     user_data = f.read()
     user_data = json.loads(user_data)
@@ -495,14 +502,15 @@ async def get_recomended_tours(request):
                                     "city_in": contr,
                                     "count_days": count_days,
                                     "count_peoples": "2"
+
                            }
              # get_tours()
         f.close()
         f1.close()
-        # try:
-        return await get_tours_by_api(data)
-        # except:
-        #     return jsons({
-        #         "id": "uuiid",
-        #         "tours": []
-        #     })
+        try:
+            return await get_tours_by_api(data,'hu' in request.args,'tu' in request.args)
+        except:
+            return jsons({
+                "id": "uuiid",
+                "tours": []
+            })
