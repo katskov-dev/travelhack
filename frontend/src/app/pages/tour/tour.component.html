@@ -11,8 +11,19 @@
     <div nz-col nzXs="20" nzSm="16" nzMd="12" nzLg="14" nzXl="16">
 
         <div nz-row style="background-color: white;">
-            <div nz-col style="background-color: white; " nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
-                <img class="hot-tour" src="{{list_tours.hotel.photos_urls[0]}}" alt="" class="hot-turs-img">
+            <div nz-col style="background-color: white;  height:100%;" nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
+                <nz-carousel nzAutoPlay nzEffect="scrollx" style="text-align: center; 
+                height: 600px;
+                line-height: 160px;
+                background: #781799;
+                color: #4f4;
+                overflow: hidden;
+              }">
+                    <div nz-carousel-content *ngFor="let photo_url of list_tours.hotel.photos_urls" >
+                        <img src='{{photo_url}}' />
+                    </div>
+                </nz-carousel>
+                <!-- <img class="hot-tour" src="{{list_tours.hotel.photos_urls[0]}}" alt="" class="hot-turs-img"> -->
             </div>
 
             <div nz-col style=" padding: 25px;" nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
