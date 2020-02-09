@@ -8,7 +8,7 @@ export class HttpService{
     constructor(private http: HttpClient){ }
      
     postData(user: User){
-        const body = {login: user.Login, password: user.Password};
-        return this.http.post('/api/test', body); 
+        const body = {phone: user.Phone, password: user.Password};
+        return this.http.post('/api/sign_in', body); 
     }
 }

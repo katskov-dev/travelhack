@@ -15,7 +15,6 @@ import { NgZorroAntdModule, NZ_I18N, ru_RU } from 'ng-zorro-antd';
 
 import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
-import { RegistComponent } from './pages/regist/regist.component';
 import { RecoverComponent } from './pages/recover/recover.component';
 import { MainComponent } from './pages/main/main.component';
 import { HeaderComponent } from './pages/main/header/header.component';
@@ -35,7 +34,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   declarations: [
     AppComponent,
     AuthComponent,
-    RegistComponent,
     RecoverComponent,
     MainComponent,
     HeaderComponent,

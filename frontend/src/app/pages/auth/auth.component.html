@@ -1,17 +1,12 @@
 <div class="auth-main-container" nz-row nzType="flex" nzJustify="center" nzAlign="middle">
-
-
-    <div nz-col nzSpan="12" class="froms-container">
-        <!-- <div nz-row nzType="flex" nzJustify="end">
-            <i nz-icon nzType="close" nzTheme="outline"></i>
-        </div> -->
+    <div nz-col nzSpan="12" class="froms-container" >
         <div nz-row nzSpan="12">
             <h2>Войти в сервис</h2>
         </div>
 
         <div nz-row nzSpan="12">
             <nz-input-group [nzSuffix]="suffixTemplateUser">
-                <input [(ngModel)]="user.Login" type="text" class="input-style" placeholder="Введите ваш логин" />
+                <input [(ngModel)]="user.Login" type="text" class="input-style" placeholder="Введите ваш номер" />
             </nz-input-group>
             <ng-template #suffixTemplateUser>
                 <i nz-icon nzType="user"></i>
@@ -39,7 +34,7 @@
             <p class="message"><a style="color: red" routerLink="/stem">Забыли свой логин или пароль? </a></p>
         </div>
 
-        <p class="message"><a routerLink="/regist" style="color: #4CAF50;">Создать аккаунт?</a></p>
+        <!-- <p class="message"><a routerLink="/regist" style="color: #4CAF50;">Создать аккаунт?</a></p> -->
     </div>
 
     <nz-carousel [nzEffect]="effect">
