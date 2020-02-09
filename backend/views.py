@@ -4,11 +4,11 @@ from models import *
 from test import *
 import datetime
 
-def fromisoz(time):
 
+def fromisoz(time):
     time = str(time).replace('Z', '')
     time = str(time).split('T')[0]
-    time =  datetime.datetime.strptime(time, "%Y-%m-%d") + datetime.timedelta(hours=12)
+    time = datetime.datetime.strptime(time, "%Y-%m-%d") + datetime.timedelta(hours=12)
 
     return time
 
@@ -130,6 +130,8 @@ async def get_tours(request):
     #     "count_days": 5,
     #     "count_peoples": "2"
     # }
+    hu = 'hu' in request.args
+    tu = 'tu' in request.args
     data = request.json
     date_start = data["date_start"]
     city_from = data["city_from"]
@@ -173,8 +175,14 @@ async def get_tours(request):
     res1 = await a1(date_start, date_finish, iata_from, iata_in)
     res2, hotels_amenties = await a2(date_start, date_finish, count_peoples, ids)
     tours = []
+    use_tickets = []
+    use_hotels = []
     for hotel in res2:
+        # if hu and hotel["id"] in use_hotels:
+        #     continue
         for ticket in res1["prices"]:
+        #     if tu and ticket in use_tickets:
+        #         continue
             if int(hotel["median_minprice"]) != 0:
                 photos_ids = []
                 for photos_id in hotel["photos_ids"]:
@@ -211,6 +219,11 @@ async def get_tours(request):
                         }
                 }
             tours.append(tour)
+            # use_tickets.append(ticket)
+            if hu:
+                break
+
+        # use_hotels.append(hotel["id"])
     res = []
 
     return jsons({"tours": tours})

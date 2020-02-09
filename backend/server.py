@@ -12,7 +12,7 @@ sio = socketio.AsyncServer(async_mode='sanic', cors_allowed_origins='*')
 app = Sanic(__name__)
 sio.attach(app)
 from sanic_cors import CORS, cross_origin
-
+from akinator import Akinator
 sid_visitor_id = {
 
 }
@@ -38,6 +38,7 @@ async def my_event(sid, message_data):
     msgs = {
         "messages": [msg],
     }
+
     await sio.emit('getMes', msgs, room=sid)
 
 
@@ -54,6 +55,7 @@ async def my_event(sid, uuid):
     msgs = {
         "messages": msgs,
     }
+    # if Akinator().query(uuid,)
     await sio.emit('getMes', msgs, room=sid)
 
 @sio.on("sendUiid")

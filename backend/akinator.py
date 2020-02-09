@@ -43,7 +43,7 @@ class Akinator():
 
     def query(self, id="", state=0, answer="+"):
         if not id in self.states:
-            return 0
+            return -1
         if state == 0:
             return 1
         elif (state == 1) or (answer == "+"):
