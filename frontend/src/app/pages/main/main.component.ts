@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import {User} from './interface';
 import { HttpService } from './http.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -67,7 +68,11 @@ export class MainComponent implements OnInit {
   }
 
   
-  constructor(private httpService: HttpService){}
+  constructor(private httpService: HttpService, public router: Router){}
+
+  redirectTour(id){
+    this.router.navigate(['/tour'], { queryParams: { id } })
+  }
   
   user: User = new User(); // данные от пользователя
   

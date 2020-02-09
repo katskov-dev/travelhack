@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: 'recover', component: RecoverComponent},
   { path: 'map', component: MapComponent},
   { path: 'tour', component: TourComponent},
-
   { path: '**', component: MainComponent },
 
 ];
