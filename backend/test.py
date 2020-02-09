@@ -140,7 +140,7 @@ async def req2(check_in, check_out, adults, ids):
         # data = json.dumps(data).encode()
         async with session.post('https://s.travel.megafon.ru/api/wl_search/result', json=data) as resp:
             d = json.loads(await resp.text())
-            # print(json.dumps(d,indent=4))
+            print(json.dumps(d,indent=4))
             # loc = d[ids]
             hotels = d["hotels"]
             # return d
