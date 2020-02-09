@@ -34,6 +34,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   } 
   
   tour: Tour = new Tour();
+  messages = [];
   msg_user = [];
   msg_bot = [];
 
@@ -51,22 +52,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.log(arrayFromServer)
         for (let i = 0; i < arrayFromServer[0].length; i ++ ){
           console.log('kek1---> ', data.messages[i].type, data.messages[i].content)
-          if(data.messages[i].type=="USER_MESSAGE"){
-            this.msg_user.push(
-              [
-                {'message': data.messages[i].content}
-              ]
-            )
-            
-          }else{
+          this.messages.push(data.messages[i]);
 
-            this.msg_bot.push(
-              [
-                {'message': data.messages[i].content}
-              ]
-            )
-            
-          }
+          
         }
         this.cdr.detectChanges();
         this.scrollToBottom();
