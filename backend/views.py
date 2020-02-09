@@ -39,15 +39,24 @@ async def test2(request):
 
 async def sign_in(request):
     data = request.json
-    person = Person.get_or_none(Person.name == data['name'])
-    if (person != None or person.password == data["password"]):
-        access_key = uuid.uuid4()
-        session = Session(person=person.id,
-                          access_key=access_key)
-        session.save()
-        return jsons({"access_token": str(access_key),
-                      "code": "0"})
-    return jsons({"code": "1"})
+    phone = data["phone"]
+    f = open("analized.json", 'r')
+    user_data = f.read()
+    user_data = json.loads(user_data)
+    # print(user_data)
+    if phone in user_data:
+        return jsons({"code": "0"})
+    else:
+        return jsons({"code": "1"})
+    # person = Person.get_or_none(Person.name == data['name'])
+    # if (person != None or person.password == data["password"]):
+    #     access_key = uuid.uuid4()
+    #     session = Session(person=person.id,
+    #                       access_key=access_key)
+    #     session.save()
+    #     return jsons({"access_token": str(access_key),
+    #                   "code": "0"})
+    # return jsons({"code": "1"})
 
 
 async def sign_up(request):
@@ -123,11 +132,12 @@ async def get_tours_by_api(data):
 
     res1 = await a1(date_start, date_finish, iata_from, iata_in)
     res2, hotels_amenties = await a2(date_start, date_finish, count_peoples, ids)
+
     package_tours = {}
     tours = []
     use_tickets = []
     use_hotels = []
-
+    # print(res2)
     for hotel in res2:
         # if hu and hotel["id"] in use_hotels:
         #     continue
@@ -181,6 +191,9 @@ async def get_tours_by_api(data):
     uuiid = str(uuid.uuid4())
     print(uuiid)
     packages_tours[uuiid] = package_tours
+
+    # print(tours)
+
     return jsons({
         "id": uuiid,
         "tours": tours
@@ -370,7 +383,7 @@ async def get_package(request, package_id):
             stars = request.args["stars"][0].split(",")
             stars = map(int, stars)
             stars = list(stars)
-            print(stars)
+            # print(stars)
             tours_cached = tours.copy()
             tours = []
             for tour in tours_cached:
@@ -380,7 +393,7 @@ async def get_package(request, package_id):
             prices = request.args["prices"][0].split(",")
             prices = map(int, prices)
             prices = list(prices)
-            print(prices)
+            # print(prices)
             tours_cached = tours.copy()
             tours = []
             for tour in tours_cached:
@@ -428,41 +441,68 @@ async def get_recomended_tours(request):
                 contr = key
 
         now = datetime.datetime.now()
-        min = 6
+        now = datetime.date(now.year, now.month, now.day)
+
+        min = 1000
         rdate = []
         for date in user_data["dates"]:
+            dated = datetime.date(2020, date[1], date[0])
 
-            if ((- abs (int(now.month) - date[1])) % 12 < min):
-                min = ( - abs(int(now.month) - date[1])) % 12
-                rdate = date
+            if dated > now:
+                delta = dated - now
+                delta = delta.days
+                if delta < min:
+                    min = delta
+                    rdate = date
+            # if ((- abs (int(now.month) - date[1])) % 12 < min):
+            #     min = ( - abs(int(now.month) - date[1])) % 12
+            #     rdate = date
         if rdate != []:
             aa = datetime.date(2020, rdate[1], rdate[0])
             bb = datetime.date(2020, rdate[3], rdate[2])
             cc = bb - aa
             count_days = cc.days
-            year = str(aa.year)
-            month = str(aa.month)
+            # year = str(aa.year)
+            # month = str(aa.month)
+            # if len(month) == 1:
+            #     month = "0"+ month
+            # day = str(aa.day)
+            # if len(day) == 1:
+            #     day = "0" + day
+
+            now = now + datetime.timedelta(days=7)
+            year = str(now.year)
+            month = str(now.month)
             if len(month) == 1:
                 month = "0"+ month
-            day = str(aa.day)
+            day = str(now.day)
             if len(day) == 1:
                 day = "0" + day
 
-            f = open("countries.json", 'r')
-            countries = f.read()
+            f1 = open("countries.json", 'r')
+            countries = f1.read()
             countries = json.loads(countries)
             for country in countries["countries"]:
                 if country["code"] == int(contr):
                     contr = country["name_r"]
                     break
-
+            print(f"{year}-{month}-{day}")
+            print(contr)
             data = {
                                     "date_start": f"{year}-{month}-{day}",#"2020-04-04",
+                                    # "date_start": "2020-04-04",
                                     "city_from": "Москва",
                                     "city_in": contr,
                                     "count_days": count_days,
                                     "count_peoples": "2"
                            }
              # get_tours()
-
+        f.close()
+        f1.close()
+        # try:
         return await get_tours_by_api(data)
+        # except:
+        #     return jsons({
+        #         "id": "uuiid",
+        #         "tours": []
+        #     })
