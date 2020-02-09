@@ -145,7 +145,7 @@ async def get_tours(request):
 
     date_start = fromisoz(date_start)
 
-    date_finish = date_start + datetime.timedelta(days=count_days)
+    date_finish = date_start + datetime.timedelta(days=int(count_days))
     month = str(date_start.month)
     if len(month) == 1:
         month = "0" + month
@@ -247,38 +247,38 @@ async def get_tours(request):
 
 
 async def get_package(request, package_id):
-    is_cheap = "cheap" in request.args
-    package = packages_tours[package_id]
-    tours = []
-    for tour_id in package.keys():
-        tours.append(package[tour_id])
-    if is_cheap:
-        tours = sorted(tours, key=lambda x: x["sum"])
-    if "stars" in request.args:
-        stars = request.args["stars"][0].split(",")
-        stars = map(int, stars)
-        stars = list(stars)
-        print(stars)
-        tours_cached = tours.copy()
+    try:
+        is_cheap = "cheap" in request.args
+        package = packages_tours[package_id]
         tours = []
-        for tour in tours_cached:
-            if tour["hotel"]["stars"] in stars:
-                tours.append(tour)
-    if "prices" in request.args:
-        prices = request.args["prices"][0].split(",")
-        prices = map(int, prices)
-        prices = list(prices)
-        print(prices)
-        tours_cached = tours.copy()
-        tours = []
-        for tour in tours_cached:
-            if (tour["sum"] > prices[0] and tour["sum"] < prices[1]):
-                tours.append(tour)
+        for tour_id in package.keys():
+            tours.append(package[tour_id])
+        if is_cheap:
+            tours = sorted(tours, key=lambda x: x["sum"])
+        if "stars" in request.args:
+            stars = request.args["stars"][0].split(",")
+            stars = map(int, stars)
+            stars = list(stars)
+            print(stars)
+            tours_cached = tours.copy()
+            tours = []
+            for tour in tours_cached:
+                if tour["hotel"]["stars"] in stars:
+                    tours.append(tour)
+        if "prices" in request.args:
+            prices = request.args["prices"][0].split(",")
+            prices = map(int, prices)
+            prices = list(prices)
+            print(prices)
+            tours_cached = tours.copy()
+            tours = []
+            for tour in tours_cached:
+                if (tour["sum"] > prices[0] and tour["sum"] < prices[1]):
+                    tours.append(tour)
 
-
-            return jsons({
-                "tours": tours
-            })
+                return jsons({
+                    "tours": tours
+                })
     except Exception as e:
         return jsons({
             "tours": []
