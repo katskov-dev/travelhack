@@ -4,17 +4,16 @@ from models import *
 from test import *
 import datetime
 
-
 packages_tours = {}
+global_tours = {}
+
 
 def fromisoz(time):
-
     time = str(time).replace('Z', '')
     time = str(time).split('T')[0]
     time = datetime.datetime.strptime(time, "%Y-%m-%d") + datetime.timedelta(hours=12)
 
     return time
-
 
 
 def access_control(func):
@@ -189,8 +188,8 @@ async def get_tours(request):
         for ticket in res1["prices"]:
             uuiid = str(uuid.uuid4())
 
-        #     if tu and ticket in use_tickets:
-        #         continue
+            #     if tu and ticket in use_tickets:
+            #         continue
             if int(hotel["median_minprice"]) != 0:
                 photos_ids = []
                 for photos_id in hotel["photos_ids"]:
@@ -201,7 +200,8 @@ async def get_tours(request):
                 tour = {
 
                     "id": uuiid,
-                    "sum": ticket["value"]*int(count_peoples) + hotel["median_minprice"] * 70 * int(count_peoples) * int(count_days),
+                    "sum": ticket["value"] * int(count_peoples) + hotel["median_minprice"] * 70 * int(
+                        count_peoples) * int(count_days),
 
                     "ticket":
                         {
@@ -228,6 +228,7 @@ async def get_tours(request):
                             "amenities": amenties
                         }
                 }
+                global_tours[uuiid] = tour
             package_tours[uuiid] = tour
             tours.append(tour)
             if hu:
@@ -245,12 +246,27 @@ async def get_tours(request):
     #               })
 
 
+async def get_package(request, package_id):
+    is_cheap = "cheap" in request.args
+    package = packages_tours[package_id]
+    tours = []
+    for tour_id in package.keys():
+        tours.append(package[tour_id])
+    if is_cheap:
+        tours = sorted(tours, key=lambda x: x["sum"])
 
-async def get_package(request, package):
-    return jsons(packages_tours[package])
 
+    return jsons({
+        "tours": tours
+    })
 
 
 async def get_package_tour(request, package, tour):
     return jsons(packages_tours[package][tour])
 
+
+async def get_tour_by_id(request, tour_id):
+    if tour_id in global_tours:
+        return jsons(global_tours[tour_id])
+    else:
+        return jsons({}, 404)

@@ -116,6 +116,10 @@ async def a5(request):
 async def a6(request, package):
     return await get_package(request, package)
 
+@app.route("/api/tours/<tour_id>", methods=['GET'])
+async def a7(request, tour_id):
+    return await get_tour_by_id(request, tour_id)
+
 
 @app.route("/api/packages/<package>/tours/<tour>", methods=['GET'])
 async def a6(request, package, tour):

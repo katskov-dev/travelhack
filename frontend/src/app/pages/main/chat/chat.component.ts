@@ -20,7 +20,7 @@ import { CookieService } from 'ngx-cookie-service';
         ]),
         transition(':leave', [
           style({transform: 'translateX(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateX(100%)', opacity: 0}))
+          animate('500ms', style({transform: 'translateX(c100%)', opacity: 0}))
         ])
       ]
     )
@@ -34,6 +34,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   } 
   
   tour: Tour = new Tour();
+  messages = [];
   msg_user = [];
   msg_bot = [];
 
@@ -47,21 +48,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         let arrayFromServer = new Array
         arrayFromServer.push(data.messages)
         for (let i = 0; i < arrayFromServer[0].length; i ++ ){
-          if(data.messages[i].type=="USER_MESSAGE"){
-            this.msg_user.push(
-              [
-                {'message': data.messages[i].content}
-              ]
-            )
-            
-          }else{
-            this.msg_bot.push(
-              [
-                {'message': data.messages[i].content}
-              ]
-            )
-            
-          }
+          this.messages.push(data.messages[i]);
         }
         this.cdr.detectChanges();
         this.scrollToBottom();
