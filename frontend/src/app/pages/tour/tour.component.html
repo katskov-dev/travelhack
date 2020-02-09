@@ -12,7 +12,7 @@
 
         <div nz-row style="background-color: white;">
             <div nz-col style="background-color: white; " nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
-                <img class="hot-tour" src="../../assets/hot-tour.jpg" alt="" class="hot-turs-img">
+                <img class="hot-tour" src="{{list_tours.hotel.photos_urls[0]}}" alt="" class="hot-turs-img">
             </div>
 
             <div nz-col style=" padding: 25px;" nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
@@ -27,18 +27,19 @@
                                 <nz-rate [ngModel]="list_tours.hotel.stars" nzDisabled></nz-rate>
                             </div>
                             <div nz-row style="padding-top: 10px; padding-bottom: 10px;" nzMd="12" nzLg="12" nzXl="12">
-                              
+                                <a href="http://maps.yandex.ru/?text={{list_tours.hotel.location.lat}},{{list_tours.hotel.location.lon}}">
                                 <i nz-icon style="color: rgb(122, 122, 122);" nzType="environment"
                                     nzTheme="outline"></i>
                                 <span
                                     style="color: rgb(122, 122, 122); padding-left: 5px; ">{{list_tours.hotel.address}}</span>
+                                </a>    
                             </div>
                         </div>
                         <h5 style="font-size: 11px;">Расстояние до центра: {{list_tours.hotel.distance_to_center}} метров</h5>
-                        <h3>Преимущества отеля</h3>
+                        <h3>Услуги</h3>
                         <div nz-row>
-                            <div *ngFor="let amenity of  list_tours.hotel.amenities">
-                                    {{amenity.name}}
+                            <div *ngFor="let amenity of  list_tours.hotel.amenities" style="color: #494;">
+                                    <i nz-icon nzType="check" nzTheme="outline"></i> {{amenity.name}}
                                     <!-- <nz-divider nzType="vertical"></nz-divider> -->
                             </div>
                             
@@ -55,7 +56,7 @@
                             <div nz-col style="padding-top: 5px; padding-bottom: 5px;" nzMd="10" nzLg="10" nzXl="10">
                                 <h3 style="font-size: 15px;">Цена: &nbsp;&nbsp; <span
                                         style="font-size: 20px; font-weight: bolder;">{{list_tours.sum}} ₽</span> </h3>
-                                <h5 style="font-size: 11px;"><b>Цена билетов</b>: {{list_tours.ticket.value}}</h5>
+                                <h5 style="font-size: 11px;"><b>Стоимость перелета на одного человека:</b>: {{list_tours.ticket.value}}</h5>
                                 <h5 style="font-size: 11px;"><b>Количество пересадок</b>: {{list_tours.ticket.num_of_changes}}</h5>
                             </div>
                         </div>
