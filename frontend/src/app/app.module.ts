@@ -23,8 +23,6 @@ registerLocaleData(ru);
 
 import { ChatComponent } from './pages/main/chat/chat.component';
 
-import { MapComponent } from './pages/map/map.component';
-import { TourComponent } from './pages/tour/tour.component';
 
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 // const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };

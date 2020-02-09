@@ -256,7 +256,7 @@ async def get_tours(request):
 
     date_start = fromisoz(date_start)
 
-    date_finish = date_start + datetime.timedelta(days=count_days)
+    date_finish = date_start + datetime.timedelta(days=int(count_days))
     month = str(date_start.month)
     if len(month) == 1:
         month = "0" + month
