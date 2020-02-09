@@ -254,6 +254,27 @@ async def get_package(request, package_id):
         tours.append(package[tour_id])
     if is_cheap:
         tours = sorted(tours, key=lambda x: x["sum"])
+    if "stars" in request.args:
+        stars = request.args["stars"][0].split(",")
+        stars = map(int, stars)
+        stars = list(stars)
+        print(stars)
+        tours_cached = tours.copy()
+        tours = []
+        for tour in tours_cached:
+            if tour["hotel"]["stars"] in stars:
+                tours.append(tour)
+    if "prices" in request.args:
+        prices = request.args["prices"][0].split(",")
+        prices = map(int, prices)
+        prices = list(prices)
+        print(prices)
+        tours_cached = tours.copy()
+        tours = []
+        for tour in tours_cached:
+            if (tour["sum"] > prices[0] and tour["sum"] < prices[1]):
+                tours.append(tour)
+
 
 
     return jsons({
