@@ -9,7 +9,7 @@
         <h1 style="color: white; font-weight: bolder; font-size: 3em; text-align: center; margin-bottom: 0;">Выберите путешествие по душе ...</h1>
         <div class="main-block">
             <div nz-row>
-                <div nz-col nzSpan="8">
+                <!-- <div nz-col nzSpan="8">
                     <div style="padding: 20px">
                         <div class="container-params">
                             <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Пляжный отдых" [(ngModel)]="selectedOS">
@@ -22,12 +22,12 @@
                             </nz-select>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
-                <div nz-col nzSpan="16">
+                <div nz-col nzSpan="24">
                     <div style="padding: 20px;">
-                        <div class="container-tours" leaflet [leafletOptions]="options">
+                        <div class="container-tours" leaflet [leafletOptions]="options" (leafletMapReady)="onMapReady($event)">
                             <div class="blocks-tours">
                                 <div nz-row>
                                     <div nz-col nzSpan="8">
@@ -37,6 +37,18 @@
                             </div>
 
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div nz-row>
+                <div nz-col nzOffset="2" nzSpan="22">
+                    <div style="display: flex; flex-direction: row; justify-content: space-around; width: 100%; color: #fff; font-weight: bold;">
+                        <div style="font-size: 16px;"><div style="display: inline-block; width: 16px; height: 16px; border: 1px solid #fff; background-color: #944;">
+                        </div> - Пляжный отдых</div>
+                        <div style="font-size: 16px;"><div style="display: inline-block; width: 16px; height: 16px; border: 1px solid #fff; background-color: #494;">
+                        </div> - Горнолыжные курорты</div>
+                        <div style="font-size: 16px;"><div style="display: inline-block; width: 16px; height: 16px; border: 1px solid #fff; background-color: #449;">
+                        </div> - Сафари-парки</div>
                     </div>
                 </div>
             </div>
