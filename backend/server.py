@@ -8,15 +8,35 @@ import socketio
 import json
 import time
 import os
+
 sio = socketio.AsyncServer(async_mode='sanic', cors_allowed_origins='*')
 app = Sanic(__name__)
 sio.attach(app)
 from sanic_cors import CORS, cross_origin
 from akinator import Akinator
+
 sid_visitor_id = {
 
 }
 
+
+async def send_message(text, user_id, sid=0):
+    message = Messages.create(
+        chat=0,
+        text=text,
+        visitor_token=user_id,
+        type="BOT_MESSAGE",
+        datetime=datetime.datetime.now()
+    )
+    message.save()
+    await sio.emit('getMes', {
+        "messages": [
+            {
+                "type": 'BOT_MESSAGE',
+                'content': text
+            },
+        ],
+    }, room=sid)
 
 
 @sio.on("sendMes")
@@ -38,8 +58,24 @@ async def my_event(sid, message_data):
     msgs = {
         "messages": [msg],
     }
-
     await sio.emit('getMes', msgs, room=sid)
+    id = data["uuid"]
+    if Akinator.check_yes(data["message"]):
+        state = Akinator().states[id]
+        state = Akinator().query(id,state, "+")
+        Akinator().states[id] = state
+
+        text = Akinator().messages[state]
+        await send_message(text, message_data["uuid"], sid)
+    elif Akinator.check_no(data["message"]):
+        state = Akinator().states[id]
+        state = Akinator().query(id, state, "-")
+        Akinator().states[id] = state
+
+        text = Akinator().messages[state]
+        await send_message(text, message_data["uuid"], sid)
+    else:
+        await send_message("Я вас не понимаю :( Нужно отвечать 'да' или 'нет'", message_data["uuid"], sid)
 
 
 
@@ -55,8 +91,9 @@ async def my_event(sid, uuid):
     msgs = {
         "messages": msgs,
     }
-    # if Akinator().query(uuid,)
+
     await sio.emit('getMes', msgs, room=sid)
+
 
 @sio.on("sendUiid")
 async def my_event(sid, uuid):
@@ -71,6 +108,17 @@ async def my_event(sid, uuid):
         "messages": msgs,
     }
     await sio.emit('getMes', msgs, room=sid)
+
+    state = Akinator().query(uuid)
+    print(state)
+    if state == 0:
+        Akinator().states[uuid] = 1
+        await send_message(
+            "Если вы согласитесь ответить на несколько вопросов, то я готов подобрать для вас страну, согласны? :)",
+            uuid, sid)
+    else:
+        text = Akinator().messages[state]
+        await send_message(text, uuid, sid)
 
 
 @app.route('/api/sendall', methods=["POST"])
@@ -116,6 +164,7 @@ async def a5(request):
 async def a6(request, package):
     return await get_package(request, package)
 
+
 @app.route("/api/tours/<tour_id>", methods=['GET'])
 async def a7(request, tour_id):
     return await get_tour_by_id(request, tour_id)
@@ -124,6 +173,7 @@ async def a7(request, tour_id):
 @app.route("/api/packages/<package>/tours/<tour>", methods=['GET'])
 async def a6(request, package, tour):
     return await get_package_tour(request, package, tour)
+
 
 # @app.route("api/get_tours_by_api", methods=['POST'])
 # def a6(request):

@@ -247,18 +247,24 @@ async def get_tours(request):
 
 
 async def get_package(request, package_id):
-    is_cheap = "cheap" in request.args
-    package = packages_tours[package_id]
-    tours = []
-    for tour_id in package.keys():
-        tours.append(package[tour_id])
-    if is_cheap:
-        tours = sorted(tours, key=lambda x: x["sum"])
+    try:
+        is_cheap = "cheap" in request.args
+        for key in package_id:
+            print(type(key))
+        package = packages_tours[package_id]
+        tours = []
+        for tour_id in package.keys():
+            tours.append(package[tour_id])
+        if is_cheap:
+            tours = sorted(tours, key=lambda x: x["sum"])
 
-
-    return jsons({
-        "tours": tours
-    })
+        return jsons({
+            "tours": tours
+        })
+    except Exception as e:
+        return jsons({
+            "tours": []
+        })
 
 
 async def get_package_tour(request, package, tour):
