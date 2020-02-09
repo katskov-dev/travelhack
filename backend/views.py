@@ -276,10 +276,13 @@ async def get_package(request, package_id):
                 tours.append(tour)
 
 
-
-    return jsons({
-        "tours": tours
-    })
+            return jsons({
+                "tours": tours
+            })
+    except Exception as e:
+        return jsons({
+            "tours": []
+        })
 
 
 async def get_package_tour(request, package, tour):

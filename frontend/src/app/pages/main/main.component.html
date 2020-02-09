@@ -55,7 +55,7 @@
                     <div style="padding: 20px;">
                         <div class="container-tours-modal">
                             
-                            <div *ngFor="let tour of list_tours" class="blocks-tours">
+                            <div *ngFor="let tour of list_tours" class="blocks-tours" (click)="redirectTour(tour.id)">
                                 <div nz-row>
                                     <div nz-col nzSpan="8">
                                         <img class="tours-img" src="{{tour.hotel.photos_urls[0]}}" alt="">
