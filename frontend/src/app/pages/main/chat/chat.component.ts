@@ -43,14 +43,10 @@ export class ChatComponent implements OnInit {
       this.cookieService.set( 'Uuid', ui);
     }else{
       this.websocketService.sendUiid(this.cookieService.get('Uuid'));
-      console.log(this.cookieService.get('Uuid'))
-      
       this.websocketService.getMessages().subscribe((data: Tour) => {
         let arrayFromServer = new Array
         arrayFromServer.push(data.messages)
-        console.log(arrayFromServer)
         for (let i = 0; i < arrayFromServer[0].length; i ++ ){
-          console.log('kek1---> ', data.messages[i].type, data.messages[i].content)
           if(data.messages[i].type=="USER_MESSAGE"){
             this.msg_user.push(
               [
@@ -58,7 +54,6 @@ export class ChatComponent implements OnInit {
               ]
             )
           }else{
-
             this.msg_bot.push(
               [
                 {'message': data.messages[i].content}

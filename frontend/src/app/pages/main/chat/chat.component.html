@@ -1,5 +1,6 @@
 <div class="chat-block">
     <div  *ngIf="chatBlock" class="chat" [@enterAnimation]>
+        <button class="close-chat-btn" nzType="link" (click)="openChat(1)" nz-button [nzSize]="small" nzShape="circle"><i nz-icon nzType="close" nzTheme="outline"></i></button>
         <div class="header-chat">
             <h1 style="font-size: 30px; color:white">Привет гость 👋</h1>
             <h2 style="font-size: 13px;color:rgb(212, 211, 211)">Я помогу тебе с вопросами и выбором туров!</h2>
