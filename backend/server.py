@@ -112,6 +112,15 @@ async def a5(request):
     return await get_tours(request)
 
 
+@app.route("/api/packages/<package>", methods=['GET'])
+async def a6(request, package):
+    return await get_package(request, package)
+
+
+@app.route("/api/packages/<package>/tours/<tour>", methods=['GET'])
+async def a6(request, package, tour):
+    return await get_package_tour(request, package, tour)
+
 # @app.route("api/get_tours_by_api", methods=['POST'])
 # def a6(request):
 #     return await get_tours_by_api(request)
