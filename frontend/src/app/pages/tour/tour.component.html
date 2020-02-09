@@ -20,7 +20,7 @@
                 <div nz-row style=" padding-bottom: 2   0px; width: 100%;" nzSpan="12" nzType="flex" nzAlign="middle">
                     <div nz-col style="background-color: white; width: 100%;  padding-left: 10px;  padding-top: 5px;"
                         nzSpan="12" nzType="flex" nzJustify="center" nzAlign="middle">
-                        <h3>{{list_tours.hotel.name}}</h3>
+                        <!-- <h3>{{list_tours.hotel.name}}</h3> -->
                         <div nz-row>
                             <div nz-col style="padding-top: 5px;" nzMd="10" nzLg="10" nzXl="10">
                                 <nz-rate [ngModel]="list_tours.stars" nzDisabled></nz-rate>
@@ -28,18 +28,17 @@
                             <div nz-row style="padding-top: 10px; padding-bottom: 10px;" nzMd="12" nzLg="12" nzXl="12">
                                 <i nz-icon style="color: rgb(122, 122, 122);" nzType="environment"
                                     nzTheme="outline"></i>
-                                <span
-                                    style="color: rgb(122, 122, 122); padding-left: 5px; ">{{list_tours.hotel.address}}</span>
+                                <!-- <span
+                                    style="color: rgb(122, 122, 122); padding-left: 5px; ">{{list_tours.hotel.address}}</span> -->
                             </div>
                         </div>
                         <h3>Преимущества отеля</h3>
                         <div nz-row>
-                            {{list_tours.amenities[0].name}}
+                            <!-- {{list_tours.amenities[0].name}} -->
                             <nz-divider nzType="vertical"></nz-divider>
-                            {{list_tours.amenities[1].name}}
+                            <!-- {{list_tours.amenities[1].name}} -->
                             <nz-divider nzType="vertical"></nz-divider>
-                            {{list_tours.amenities[2].name}}
-                            <button (click)="kek()"   ></button>
+                            <!-- {{list_tours.amenities[2].name}} -->
                         </div>
                     </div>
                 </div>
@@ -60,7 +59,7 @@
                 <div nz-row style="padding-top: 20px; width: 100%;" nzSpan="12" nzJustify="center" nzType="flex"
                     nzAlign="middle">
                     <div nz-col class="btn-container-for-cart" nzSpan="12">
-                        <button nz-button class="button-on-header">
+                        <button nz-button class="button-on-tour">
                             Забронировать
                         </button>
                     </div>
