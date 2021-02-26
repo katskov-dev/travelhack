@@ -1,4 +1,4 @@
-aiohttp==3.6.2
+aiohttp==3.7.4
 peewee==3.13.1
 python-socketio==4.4.0
 sanic==19.12.2
